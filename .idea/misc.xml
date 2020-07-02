@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/scroll-server-entity/pom.xml" />
+        <option value="$PROJECT_DIR$/scroll-server-calculate-service/pom.xml" />
+        <option value="$PROJECT_DIR$/scroll-server-web/pom.xml" />
+        <option value="$PROJECT_DIR$/scroll-server-interface/pom.xml" />
+        <option value="$PROJECT_DIR$/scroll-server-common/pom.xml" />
+        <option value="$PROJECT_DIR$/scroll-server-service/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8 (3)" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

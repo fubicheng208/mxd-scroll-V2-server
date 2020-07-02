@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/scroll-server-calculate-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scroll-server-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scroll-server-entity/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scroll-server-interface/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scroll-server-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scroll-server-web/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scroll-server-web/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

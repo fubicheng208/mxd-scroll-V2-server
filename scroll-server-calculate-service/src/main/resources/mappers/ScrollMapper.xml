@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fubic.scrollservercalculateservice.mapper.ScrollMapper">
+    <resultMap id="BaseResultMap" type="com.fubic.entity.WeaponScroll">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="name" property="name"/>
+        <result column="main_attribute" property="mainAttribute"/>
+        <result column="vice_attribute" property="viceAttribute"/>
+        <result column="attack" property="attack"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, name, main_attribute, vice_attribute,attack
+    </sql>
+
+    <select id="selectById" resultType="com.fubic.entity.WeaponScroll" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from weapon_scroll
+        where id = #{id, jdbcType=VARCHAR}
+    </select>
+
+    <insert id="save" parameterType="com.fubic.entity.WeaponScroll">
+        insert into weapon_scroll (id, name, main_attribute, vice_attribute, attack)
+        values (#{id,jdbcType=VARCHAR}, #{name, jdbcType=VARCHAR},
+        #{main_attribute, jdbcType=INTEGER},#{vice_attribute, jdbcType=INTEGER},#{attack, jdbcType=INTEGER})
+        on duplicate key update
+        name=#{name, jdbcType=VARCHAR},
+        main_attribute=#{main_attribute, jdbcType=INTEGER},
+        vice_attribute=#{vice_attribute, jdbcType=INTEGER},
+        attack=#{attack, jdbcType=INTEGER}
+    </insert>
+
+    <select id="selectAll" resultType="com.fubic.entity.WeaponScroll">
+        select
+        <include refid="Base_Column_List"/>
+        from weapon_scroll
+    </select>
+</mapper>
