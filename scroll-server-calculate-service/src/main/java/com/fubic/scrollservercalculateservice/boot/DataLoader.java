@@ -3,6 +3,7 @@ package com.fubic.scrollservercalculateservice.boot;
 
 
 import com.fubic.entity.WeaponScroll;
+import com.fubic.myInterface.IRedisService;
 import com.fubic.scrollservercalculateservice.mapper.ScrollMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -13,6 +14,9 @@ public class DataLoader implements CommandLineRunner {
 
     @Autowired
     private ScrollMapper scrollMapper;
+
+    @Autowired
+    private IRedisService redisService;
 //    private WeaponScrollRepository weaponScrollRepository;
 
 //    @Autowired
@@ -33,6 +37,7 @@ public class DataLoader implements CommandLineRunner {
 
 //        weaponScrollRepository.save(scroll1);
         scrollMapper.save(scroll1);
+        redisService.save(scroll1);
 
         WeaponScroll scroll2 = new WeaponScroll();
         scroll2.setName("RED卷");
@@ -43,6 +48,8 @@ public class DataLoader implements CommandLineRunner {
 
 //        weaponScrollRepository.save(scroll2);
         scrollMapper.save(scroll2);
+        redisService.save(scroll2);
+
 
         WeaponScroll scroll3 = new WeaponScroll();
         scroll3.setName("V卷");
@@ -53,6 +60,8 @@ public class DataLoader implements CommandLineRunner {
 
 //        weaponScrollRepository.save(scroll3);
         scrollMapper.save(scroll3);
+        redisService.save(scroll3);
+
 
         WeaponScroll scroll4 = new WeaponScroll();
         scroll4.setName("x卷9攻");
@@ -63,6 +72,8 @@ public class DataLoader implements CommandLineRunner {
 
 //        weaponScrollRepository.save(scroll4);
         scrollMapper.save(scroll4);
+        redisService.save(scroll4);
+
 
         WeaponScroll scroll5 = new WeaponScroll();
         scroll5.setName("星火卷8攻");
@@ -73,6 +84,7 @@ public class DataLoader implements CommandLineRunner {
 
 //        weaponScrollRepository.save(scroll5);
         scrollMapper.save(scroll5);
+        redisService.save(scroll5);
 
 
         WeaponScroll scroll6 = new WeaponScroll();
@@ -84,6 +96,8 @@ public class DataLoader implements CommandLineRunner {
 
 //        weaponScrollRepository.save(scroll6);
         scrollMapper.save(scroll6);
+        redisService.save(scroll6);
+
 
         WeaponScroll scroll7 = new WeaponScroll();
         scroll7.setName("70%痕迹");
@@ -94,6 +108,7 @@ public class DataLoader implements CommandLineRunner {
 
 //        weaponScrollRepository.save(scroll7);
         scrollMapper.save(scroll7);
+        redisService.save(scroll7);
 
 
         WeaponScroll scroll8 = new WeaponScroll();
@@ -105,6 +120,8 @@ public class DataLoader implements CommandLineRunner {
 
 //        weaponScrollRepository.save(scroll8);
         scrollMapper.save(scroll8);
+        redisService.save(scroll8);
+
 
         WeaponScroll scroll9 = new WeaponScroll();
         scroll9.setName("15%痕迹");
@@ -115,6 +132,8 @@ public class DataLoader implements CommandLineRunner {
 
 //        weaponScrollRepository.save(scroll9);
         scrollMapper.save(scroll9);
+        redisService.save(scroll9);
+
 
 
         WeaponScroll scroll10 = new WeaponScroll();
@@ -125,6 +144,8 @@ public class DataLoader implements CommandLineRunner {
         scroll10.setAttack(10);//X卷10攻
 //        weaponScrollRepository.save(scroll10);
         scrollMapper.save(scroll10);
+        redisService.save(scroll10);
+
 
 
         WeaponScroll scroll11 = new WeaponScroll();
@@ -135,6 +156,8 @@ public class DataLoader implements CommandLineRunner {
         scroll11.setAttack(11);//X卷11攻
 //        weaponScrollRepository.save(scroll11);
         scrollMapper.save(scroll11);
+        redisService.save(scroll11);
+
 
 
         WeaponScroll scroll12 = new WeaponScroll();
@@ -145,6 +168,8 @@ public class DataLoader implements CommandLineRunner {
         scroll12.setAttack(12);//X卷12攻
 //        weaponScrollRepository.save(scroll12);
         scrollMapper.save(scroll12);
+        redisService.save(scroll12);
+
 
 
         WeaponScroll scroll13 = new WeaponScroll();
@@ -155,6 +180,8 @@ public class DataLoader implements CommandLineRunner {
         scroll13.setAttack(9);//8~11
 //        weaponScrollRepository.save(scroll13);
         scrollMapper.save(scroll13);
+        redisService.save(scroll13);
+
 
 
         WeaponScroll scroll14 = new WeaponScroll();
@@ -165,6 +192,8 @@ public class DataLoader implements CommandLineRunner {
         scroll14.setAttack(10);//8~11
 //        weaponScrollRepository.save(scroll14);
         scrollMapper.save(scroll14);
+        redisService.save(scroll14);
+
 
 
         WeaponScroll scroll15 = new WeaponScroll();
@@ -175,6 +204,8 @@ public class DataLoader implements CommandLineRunner {
         scroll15.setAttack(11);//8~11
 //        weaponScrollRepository.save(scroll15);
         scrollMapper.save(scroll15);
+        redisService.save(scroll15);
+
 
     }
 }

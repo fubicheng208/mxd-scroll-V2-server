@@ -3,10 +3,11 @@ package com.fubic.entity;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
 @Table
-public class WeaponScroll {
+public class WeaponScroll implements Serializable {
 
     @Id
     private String id;
