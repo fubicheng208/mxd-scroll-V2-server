@@ -16,10 +16,10 @@ class ScrollServerWebApplicationTests {
 
     @Test
     void getTestJson(){
-        Weapon weapon = new Weapon(14,12,169,252,157,120,160);
-        weapon.setPossibleScrolls(new String[]{"惊人卷","RED卷","V卷"});
-        WeaponEmailDTO weaponEmailDTO = new WeaponEmailDTO(weapon, "fubicheng208@126.com");
-        System.out.println(JSON.toJSONString(weaponEmailDTO));
+//        Weapon weapon = new Weapon(14,12,169,252,157,120,160);
+//        weapon.setPossibleScrolls(new String[]{"惊人卷","RED卷","V卷"});
+//        WeaponEmailDTO weaponEmailDTO = new WeaponEmailDTO(weapon, "fubicheng208@126.com");
+//        System.out.println(JSON.toJSONString(weaponEmailDTO));
     }
 
 }

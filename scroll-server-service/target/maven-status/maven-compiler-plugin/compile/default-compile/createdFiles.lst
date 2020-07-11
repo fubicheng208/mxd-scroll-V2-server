@@ -1,0 +1,8 @@
+com\fubic\service\RMQSenderMailService$1.class
+com\fubic\config\RabbitmqConfig.class
+com\fubic\service\RMQMailReceiverService.class
+com\fubic\config\RabbitmqConfig$1.class
+com\fubic\service\RMQSenderMailService.class
+com\fubic\config\RabbitmqConfig$2.class
+com\fubic\service\SendMailService.class
+com\fubic\service\RMQSenderMailService$2.class

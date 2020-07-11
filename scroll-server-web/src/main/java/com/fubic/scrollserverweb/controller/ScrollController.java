@@ -31,29 +31,6 @@ public class ScrollController {
     @Autowired
     RMQSenderMailService rmqSenderMailService;
 
-    /*@PostMapping("/calculate")
-    @RequestLog(description = "计算卷轴组合")
-    public String calculate(@Valid @RequestBody WeaponEmailDTO weaponEmailDTO, BindingResult result) {
-        try {
-            String[] possibleScrolls = weaponEmailDTO.getWeapon().getPossibleScrolls();
-            if (possibleScrolls.length == 0)
-                return "未选中任何卷轴";
-            if (result.hasErrors()) {
-                return "请检查您的输入";
-            }
-            if (weaponEmailDTO.getWeapon().getGrade() != 140 && weaponEmailDTO.getWeapon().getGrade() != 150 && weaponEmailDTO.getWeapon().getGrade() != 160 && weaponEmailDTO.getWeapon().getGrade() != 200)
-                return "装备等级，装备等级为武器原始装备等级，扣减的等级不算";
-            if (possibleScrolls.length >= 6) {
-                rmqSenderMailService.sendCalculateMsg(weaponEmailDTO);
-                return "全选卷轴：结果将以email形式发送给您";
-            } else {
-                return calculateService.getResult(weaponEmailDTO.getWeapon());
-            }
-        } catch (Exception e) {
-            log.error("计算卷轴页面-输入有错-计算失败:{}", e.getMessage());
-            return "输入有错:" + e.getMessage();
-        }
-    }*/
 
     @PostMapping("/calculate")
     @RequestLog(description = "计算卷轴组合")
