@@ -5,7 +5,14 @@ import com.fubic.model.IdAttr;
 
 import java.util.*;
 
-public class BFSCombination {
+/**
+* @Description: 使用DFS计算卷轴组合
+* @Param:
+* @return:
+* @Author: fubicheng
+* @Date: 2020/7/26
+*/
+public class DFSCombination {
 
     public static final List<String> randomScroll = new ArrayList<>();
 

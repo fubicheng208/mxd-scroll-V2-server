@@ -1,4 +1,6 @@
+com\fubic\dto\ResultDTO.class
 com\fubic\model\Weapon.class
 com\fubic\model\IdAttr.class
 com\fubic\entity\WeaponScroll.class
+com\fubic\model\CalculateResult.class
 com\fubic\dto\WeaponEmailDTO.class

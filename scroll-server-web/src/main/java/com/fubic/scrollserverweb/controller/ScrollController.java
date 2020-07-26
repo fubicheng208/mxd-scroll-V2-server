@@ -2,7 +2,10 @@ package com.fubic.scrollserverweb.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fubic.aspect.annotation.RequestLog;
+import com.fubic.aspect.enums.MyConstants;
+import com.fubic.dto.ResultDTO;
 import com.fubic.dto.WeaponEmailDTO;
+import com.fubic.model.CalculateResult;
 import com.fubic.model.Weapon;
 import com.fubic.myInterface.ICalculateService;
 import com.fubic.service.RMQSenderMailService;
@@ -32,24 +35,37 @@ public class ScrollController {
     RMQSenderMailService rmqSenderMailService;
 
 
-    @PostMapping("/calculate")
+    @PostMapping("/getWeaponResult")
     @RequestLog(description = "计算卷轴组合")
-    public String calculate(@RequestBody WeaponEmailDTO weaponEmailDTO) {
+    public ResultDTO<String> getWeaponResult(@RequestBody WeaponEmailDTO weaponEmailDTO) {
         try {
             String[] possibleScrolls = weaponEmailDTO.getWeapon().getPossibleScrolls();
-            if (possibleScrolls.length == 0)
-                return "未选中任何卷轴";
-            if (weaponEmailDTO.getWeapon().getGrade() != 140 && weaponEmailDTO.getWeapon().getGrade() != 150 && weaponEmailDTO.getWeapon().getGrade() != 160 && weaponEmailDTO.getWeapon().getGrade() != 200)
-                return "装备等级，装备等级为武器原始装备等级，扣减的等级不算";
             if (possibleScrolls.length >= 6) {
                 rmqSenderMailService.sendCalculateMsg(weaponEmailDTO);
-                return "全选卷轴：结果将以email形式发送给您";
+                return new ResultDTO<>(MyConstants.CalculateResultCode.SUCCESS.getCode(), MyConstants.CalculateResultCode.EMAIL.getMessage(),"全选卷轴：结果将以email形式发送给您");
             } else {
-                return calculateService.getResult(weaponEmailDTO.getWeapon());
+                return new ResultDTO<>(MyConstants.CalculateResultCode.SUCCESS.getCode(), MyConstants.CalculateResultCode.SUCCESS.getMessage(), calculateService.getResult(weaponEmailDTO.getWeapon()));
             }
         } catch (Exception e) {
             log.error("计算卷轴页面-输入有错-计算失败:{}", e.getMessage());
-            return "输入有错:" + e.getMessage();
+            return new ResultDTO<>(MyConstants.CalculateResultCode.FAIL.getCode(), MyConstants.CalculateResultCode.FAIL.getMessage(), null);
+        }
+    }
+
+    @PostMapping("/getWeaponResultList")
+    @RequestLog(description = "计算卷轴组合")
+    public ResultDTO<List<CalculateResult>> getWeaponResultList(@RequestBody WeaponEmailDTO weaponEmailDTO) {
+        try {
+            String[] possibleScrolls = weaponEmailDTO.getWeapon().getPossibleScrolls();
+            if (possibleScrolls.length >= 6) {
+                rmqSenderMailService.sendCalculateMsg(weaponEmailDTO);
+                return new ResultDTO<>(MyConstants.CalculateResultCode.EMAIL.getCode(), MyConstants.CalculateResultCode.EMAIL.getMessage(), null);
+            } else {
+                return new ResultDTO<>(MyConstants.CalculateResultCode.SUCCESS.getCode(), MyConstants.CalculateResultCode.SUCCESS.getMessage(), calculateService.getResultList(weaponEmailDTO.getWeapon()));
+            }
+        } catch (Exception e) {
+            log.error("计算卷轴页面-输入有错-计算失败:{}", e.getMessage());
+            return new ResultDTO<>(MyConstants.CalculateResultCode.FAIL.getCode(), MyConstants.CalculateResultCode.FAIL.getMessage(), null);
         }
     }
 

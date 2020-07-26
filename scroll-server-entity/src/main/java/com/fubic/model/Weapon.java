@@ -74,19 +74,6 @@ public class Weapon implements Serializable {
         this.hasX = 0;
     }
 
-//    public Weapon(@NotNull @Min(0) @Max(22) int starNum, @NotNull @Min(0) @Max(20) int scrollNum, @NotNull @Min(0) @Max(700) int base_attack, @NotNull @Min(0) @Max(1000) int buf_attack, @NotNull @Min(0) @Max(300) int main_attribute, @NotNull @Min(0) @Max(300) int vice_attribute, @NotNull @Min(0) @Max(300) int grade, @NotNull int hasX, @Email int email, @NotNull String[] possibleScrolls) {
-//        this.starNum = starNum;
-//        this.scrollNum = scrollNum;
-//        this.base_attack = base_attack;
-//        this.buf_attack = buf_attack;
-//        this.main_attribute = main_attribute;
-//        this.vice_attribute = vice_attribute;
-//        this.grade = grade;
-//        this.hasX = hasX;
-//        this.email = email;
-//        this.possibleScrolls = possibleScrolls;
-//    }
-
     public String[] getPossibleScrolls() {
         return possibleScrolls;
     }

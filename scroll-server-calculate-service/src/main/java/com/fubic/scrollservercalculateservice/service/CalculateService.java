@@ -3,19 +3,18 @@ package com.fubic.scrollservercalculateservice.service;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.fubic.aspect.annotation.MethodLog;
 import com.fubic.entity.WeaponScroll;
+import com.fubic.model.CalculateResult;
 import com.fubic.model.IdAttr;
 import com.fubic.model.Weapon;
 import com.fubic.myInterface.ICalculateService;
 import com.fubic.myInterface.IRedisService;
 import com.fubic.scrollservercalculateservice.mapper.ScrollMapper;
-import com.fubic.scrollservercalculateservice.utils.BFSCombination;
-import org.hibernate.boot.spi.InFlightMetadataCollector;
+import com.fubic.scrollservercalculateservice.utils.DFSCombination;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,8 +32,6 @@ import java.util.Map;
 @Component
 public class CalculateService implements ICalculateService {
     private static final Logger log = LoggerFactory.getLogger(CalculateService.class);
-//    @Autowired
-//    private WeaponScrollRepository weaponScrollRepository;
 
     @Autowired
     private ScrollMapper scrollMapper;
@@ -42,10 +39,8 @@ public class CalculateService implements ICalculateService {
     @Autowired
     private IRedisService redisService;
 
-
     @Override
     public List<WeaponScroll> getAllScroll() {
-//        return weaponScrollRepository.findAll();
         return scrollMapper.selectAll();
     }
 
@@ -93,7 +88,7 @@ public class CalculateService implements ICalculateService {
 //            lsViceAttr.add(new IdAttr(scroll.getId(), scroll.getVice_attribute()));
         }
 
-        List<List<String>> resAttack = BFSCombination.getCombination(lsAttack, scrollAttack, scrollNum);
+        List<List<String>> resAttack = DFSCombination.getCombination(lsAttack, scrollAttack, scrollNum);
         if (resAttack.size() == 0)
             throw new Exception("计算出错,请检查您的输入");
         resAttack = filterByMainAndViceAttribute(resAttack, mMainAttr, mViceAttr, scrollMainAttr, scrollViceAttr);
@@ -111,6 +106,58 @@ public class CalculateService implements ICalculateService {
 //        resAttack.retainAll(resViceAttr);
 
         return getResultFromCollection(resAttack);
+
+    }
+
+    @Override
+    @MethodLog
+    public List<CalculateResult> getResultList(Weapon weapon) throws Exception {
+
+//        List<WeaponScroll> scrolls = getAllScroll();
+        List<WeaponScroll> scrolls = getSelectedScroll(weapon.getPossibleScrolls());
+        //基础攻击+卷+星
+        int scrollStarTotalAttack = weapon.getBase_attack() + weapon.getBuf_attack();
+        //基础攻击+卷
+        int scrollTotalAttack = scrollStarTotalAttack;
+        int starNum = weapon.getStarNum();
+        int grade = weapon.getGrade();
+        int scrollNum = weapon.getScrollNum();
+        //基础主属性增加:卷+星
+        int scrollStarTotalMainAttr = weapon.getMain_attribute();
+        int scrollTotalMainAttr = scrollStarTotalMainAttr;
+
+        for (int i = starNum; i > 0; i--) {
+            scrollTotalAttack = calStarAttackOnce(scrollTotalAttack, i, grade);
+            scrollTotalMainAttr = calStarMainAttrOnce(scrollTotalMainAttr, i, grade);
+        }
+        //卷轴所加攻击
+        int scrollAttack = scrollTotalAttack - weapon.getBase_attack();
+        //卷轴所加主属性
+        int scrollMainAttr = scrollTotalMainAttr;
+        //卷轴所加无关属性
+        int scrollViceAttr = weapon.getVice_attribute();
+
+        List<IdAttr> lsAttack = new ArrayList<>();
+//        List<IdAttr> lsMainAttr = new ArrayList<>();
+//        List<IdAttr> lsViceAttr = new ArrayList<>();
+        HashMap<String, Integer> mMainAttr = new HashMap<>();
+        HashMap<String, Integer> mViceAttr = new HashMap<>();
+
+
+        for (WeaponScroll scroll : scrolls) {
+            lsAttack.add(new IdAttr(scroll.getId(), scroll.getAttack()));
+            mMainAttr.put(scroll.getId(), scroll.getMain_attribute());
+            mViceAttr.put(scroll.getId(), scroll.getVice_attribute());
+        }
+
+        List<List<String>> resAttack = DFSCombination.getCombination(lsAttack, scrollAttack, scrollNum);
+        if (resAttack.size() == 0)
+            throw new Exception("计算出错,请检查您的输入");
+        resAttack = filterByMainAndViceAttribute(resAttack, mMainAttr, mViceAttr, scrollMainAttr, scrollViceAttr);
+        if (resAttack.size() == 0)
+            throw new Exception("计算出错，请检查您的输入");
+
+        return getResultListFromCollection(resAttack);
 
     }
 
@@ -186,13 +233,33 @@ public class CalculateService implements ICalculateService {
         return res;
     }
 
+    private List<CalculateResult> getResultListFromCollection(List<List<String>> resList) {
+        List<CalculateResult> results = new ArrayList<>();
+        for (List<String> ls : resList) {
+            Map<String, Integer> map = new HashMap<>();
+            for (String id : ls) {
+//                WeaponScroll ws = (WeaponScroll) weaponScrollRepository.getOne(id);
+//                WeaponScroll ws = (WeaponScroll) scrollMapper.selectById(id);
+                WeaponScroll ws = redisService.selectById(id);
+                String name = ws.getName();
+                if (map.containsKey(name))
+                    map.put(name, map.get(name) + 1);
+                else
+                    map.put(name, 1);
+            }
+            for (Map.Entry<String, Integer> entry : map.entrySet()) {
+                results.add(new CalculateResult(entry.getKey(), entry.getValue()));
+            }
+        }
+        return results;
+    }
+
 
     private String getResultFromCollection(List<List<String>> resList) {
         String res = "";
         for (List<String> ls : resList) {
             Map<String, Integer> map = new HashMap<>();
             for (String id : ls) {
-//                WeaponScroll ws = (WeaponScroll) weaponScrollRepository.getOne(id);
 //                WeaponScroll ws = (WeaponScroll) scrollMapper.selectById(id);
                 WeaponScroll ws = redisService.selectById(id);
                 String name = ws.getName();

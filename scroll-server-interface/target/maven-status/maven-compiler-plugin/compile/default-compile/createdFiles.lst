@@ -1,0 +1,3 @@
+com\fubic\myInterface\ICalculateService.class
+com\fubic\myInterface\ISendMailService.class
+com\fubic\myInterface\IRedisService.class
